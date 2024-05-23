@@ -22,6 +22,7 @@ public class EstoqueMenu {
                     estoqueController.adicionar();
                     break;
                 case 2:
+                    estoqueController.atualizar();
                     break;
                 case 3:
                     estoqueController.remover();
