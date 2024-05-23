@@ -13,8 +13,8 @@ import com.compass.utils.LeitorDeDados;
 
 public class RegistroDoacao {
     public static void menu() {
-/*        JpaUtil.init();
-        CentroService service = new CentroService();
+        JpaUtil.init();
+      /*  CentroService service = new CentroService();
         CentroDeDistribuicao centro = new CentroDeDistribuicao(null, "Centro de Distribuição Esperança",
                 "Av. Boqueirão, 2450 - Igara, Canoas - RS, 92032-420");
         CentroDeDistribuicao centro1 = new CentroDeDistribuicao(null, "Centro de Distribuição Prosperidade",
