@@ -1,5 +1,7 @@
 package com.compass.utils;
 
+import com.compass.domain.exceptions.NoItemsRegisteredException;
+
 import java.util.Map;
 import java.util.Scanner;
 
@@ -24,6 +26,23 @@ public class LeitorDeDados {
         return value;
     }
 
+    public static Long lerLongInterval(String errorMsg, long min, long max) {
+        Long value;
+        while (true) {
+            try {
+                value = Long.parseLong(scanner.nextLine());
+                if (value >= min && value <= max) {
+                    break;
+                } else {
+                    System.err.print("Valor fora do intervalo permitido! " + errorMsg);
+                }
+            } catch (NumberFormatException e) {
+                System.err.print(errorMsg);
+            }
+        }
+        return value;
+    }
+
     public static int lerInt(String errorMsg) {
         int value;
         while (true) {
@@ -36,7 +55,11 @@ public class LeitorDeDados {
         }
         return value;
     }
-    public static <T> T selecionarItem(String mensagem, Map<Integer, T> items) {
+
+    public static <T> T selecionarItem(String mensagem, String itemType, Map<Integer, T> items) throws NoItemsRegisteredException {
+        if (items.isEmpty()) {
+            throw new NoItemsRegisteredException(itemType);
+        }
         System.out.println(mensagem);
         imprimirMap(items);
         System.out.print("Selecione o item: ");
@@ -48,6 +71,7 @@ public class LeitorDeDados {
 
         return item;
     }
+
     public static Long lerLong(String errorMsg) {
         Long value;
         while (true) {
@@ -67,10 +91,10 @@ public class LeitorDeDados {
     }
 
     public static <K, V> void imprimirMap(Map<K, V> map) {
-    for (Map.Entry<K, V> entry : map.entrySet()) {
-        System.out.println(entry.getKey() + ": " + entry.getValue());
+        for (Map.Entry<K, V> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
     }
-}
 
     public static void close() {
         scanner.close();
