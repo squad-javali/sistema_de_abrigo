@@ -1,8 +1,10 @@
 package com.compass.repository;
 
+import com.compass.domain.exceptions.DbIntegrityException;
 import com.compass.domain.CentroDeDistribuicao;
 import com.compass.utils.JpaUtil;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.RollbackException;
 
 import java.util.List;
 import java.util.Map;
@@ -29,19 +31,23 @@ public class CentroRepository implements SimpleRepository<CentroDeDistribuicao, 
     }
 
     @Override
-    public CentroDeDistribuicao save(CentroDeDistribuicao centro) {
-        entityManager.getTransaction().begin();
-        if (centro.getId() == null) {
-            entityManager.persist(centro);
-        } else {
-            centro = entityManager.merge(centro);
+    public CentroDeDistribuicao save(CentroDeDistribuicao centro) throws DbIntegrityException {
+        try {
+            entityManager.getTransaction().begin();
+            if (centro.getId() == null) {
+                entityManager.persist(centro);
+            } else {
+                centro = entityManager.merge(centro);
+            }
+            entityManager.getTransaction().commit();
+            return centro;
+        } catch (RollbackException e) {
+            throw new DbIntegrityException(e.getMessage());
         }
-        entityManager.getTransaction().commit();
-        return centro;
     }
 
     @Override
-    public void delete(CentroDeDistribuicao centro) {
+    public void delete(CentroDeDistribuicao centro) throws DbIntegrityException {
         entityManager.getTransaction().begin();
         if (!entityManager.contains(centro)) {
             centro = entityManager.merge(centro);

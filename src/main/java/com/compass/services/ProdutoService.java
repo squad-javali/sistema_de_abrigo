@@ -21,7 +21,7 @@ public class ProdutoService {
         repository.deleteById(id);
     }
 
-    public Map<Integer,Produto> findAll() {
+    public Map<Integer, Produto> findAll() {
         return repository.findAll();
     }
 

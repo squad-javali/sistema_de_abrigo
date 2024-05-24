@@ -19,8 +19,8 @@ public class ProdutoMenu {
             System.out.println("3 - Atualizar Produto");
             System.out.println("4 - Listar Produtos");
             System.out.println("5 - Voltar");
-            System.out.println("Digite a opção desejada: ");
-            int opcao = lerIntInterval("Opcão Invalida: ", 1, 5);
+            System.out.print("Digite a opção desejada: ");
+            int opcao = lerIntInterval("Opção Invalida: ", 1, 5);
             switch (opcao) {
                 case 1:
                     produtoController.adicionar();

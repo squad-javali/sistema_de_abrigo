@@ -1,8 +1,12 @@
 package com.compass.repository;
 
 import com.compass.domain.Produto;
+import com.compass.domain.exceptions.DbIntegrityException;
+import com.compass.domain.exceptions.EntityExistsException;
 import com.compass.utils.JpaUtil;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.RollbackException;
+import org.hibernate.exception.ConstraintViolationException;
 
 import java.util.List;
 import java.util.Map;
@@ -29,29 +33,37 @@ public class ProdutoRepository implements SimpleRepository<Produto, Integer> {
     }
 
     @Override
-    public Produto save(Produto produto) {
-        entityManager.getTransaction().begin();
-        if (produto.getId() == null) {
-            entityManager.persist(produto);
-        } else {
-            produto = entityManager.merge(produto);
+    public Produto save(Produto produto) throws EntityExistsException {
+        try {
+            entityManager.getTransaction().begin();
+            if (produto.getId() == null) {
+                entityManager.persist(produto);
+            } else {
+                produto = entityManager.merge(produto);
+            }
+            entityManager.getTransaction().commit();
+            return produto;
+        } catch (ConstraintViolationException e) {
+            throw new EntityExistsException("Produto já cadastrado");
         }
-        entityManager.getTransaction().commit();
-        return produto;
     }
 
     @Override
-    public void delete(Produto produto) {
-        entityManager.getTransaction().begin();
-        if (!entityManager.contains(produto)) {
-            produto = entityManager.merge(produto);
+    public void delete(Produto produto) throws DbIntegrityException {
+        try {
+            entityManager.getTransaction().begin();
+            if (!entityManager.contains(produto)) {
+                produto = entityManager.merge(produto);
+            }
+            entityManager.remove(produto);
+            entityManager.getTransaction().commit();
+        } catch (RollbackException e) {
+            throw new DbIntegrityException(e.getMessage());
         }
-        entityManager.remove(produto);
-        entityManager.getTransaction().commit();
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Integer id) throws DbIntegrityException {
         Produto produto = findById(id);
         if (produto != null) {
             delete(produto);
