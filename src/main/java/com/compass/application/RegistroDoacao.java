@@ -14,13 +14,13 @@ import com.compass.utils.LeitorDeDados;
 public class RegistroDoacao {
     public static void menu() {
         JpaUtil.init();
-      /*  CentroService service = new CentroService();
+/*        CentroService service = new CentroService();
         CentroDeDistribuicao centro = new CentroDeDistribuicao(null, "Centro de Distribuição Esperança",
                 "Av. Boqueirão, 2450 - Igara, Canoas - RS, 92032-420");
         CentroDeDistribuicao centro1 = new CentroDeDistribuicao(null, "Centro de Distribuição Prosperidade",
                 "Av. Borges de Medeiros 1501 Porto Alegre CEP 90119900");
         CentroDeDistribuicao centro2 = new CentroDeDistribuicao(null, "Centro de Distribuição Reconstrução",
-                "R. Dr. Décio Martins Costa, 312 - Vila Eunice Nova,Cachoeirinha - RS, 94920-170");
+                "R. Dr. Décio Martins Costa, 312 - Vila Eunice Nova, Cachoeirinha - RS, 94920-170");
         service.save(centro);
         service.save(centro1);
         service.save(centro2);*/
@@ -42,7 +42,7 @@ public class RegistroDoacao {
                     produtoMenu.menu();
                     break;
                 case 3:
-                    EstoqueMenu estoqueMenu = new EstoqueMenu(new EstoqueController(new EstoqueService(),new CentroService(),new ProdutoService()));
+                    EstoqueMenu estoqueMenu = new EstoqueMenu(new EstoqueController(new EstoqueService(), new CentroService(), new ProdutoService()));
                     estoqueMenu.menu();
                     break;
                 default:

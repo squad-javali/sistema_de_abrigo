@@ -27,4 +27,12 @@ public class EstoqueService {
     public Map<Integer, Estoque> findAll() {
         return repository.findAll();
     }
+
+    public Map<Integer, Estoque> findAllByCentroId(Integer id) {
+        return repository.findAllByCentroId(id);
+    }
+
+    public Estoque findByProdutoId(Integer id) {
+        return repository.findByProdutoId(id);
+    }
 }

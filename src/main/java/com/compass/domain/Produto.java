@@ -15,7 +15,9 @@ import java.util.Objects;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "produto")
+@Table(name = "produto", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"descricao", "tamanho", "sexo"})
+})
 public class Produto implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -24,12 +26,15 @@ public class Produto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false)
     private String descricao;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private RoupaTamanho tamanho;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private RoupaSexo sexo;
 
     @Override

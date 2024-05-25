@@ -1,6 +1,6 @@
 package com.compass.repository;
 
-import com.compass.domain.Produto;
+import com.compass.domain.Pedido;
 import com.compass.domain.exceptions.DbIntegrityException;
 import com.compass.domain.exceptions.EntityExistsException;
 import com.compass.utils.JpaUtil;
@@ -13,49 +13,49 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ProdutoRepository implements SimpleRepository<Produto, Integer> {
+public class PedidoRepository implements SimpleRepository<Pedido, Integer> {
 
     private final EntityManager entityManager;
 
-    public ProdutoRepository() {
+    public PedidoRepository() {
         this.entityManager = JpaUtil.getEntityManager();
     }
 
     @Override
-    public Produto findById(Integer id) {
-        return entityManager.find(Produto.class, id);
+    public Pedido findById(Integer id) {
+        return entityManager.find(Pedido.class, id);
     }
 
     @Override
-    public Map<Integer, Produto> findAll() {
-        List<Produto> produtos = entityManager.createQuery("SELECT p FROM Produto p", Produto.class).getResultList();
-        return produtos.stream().collect(Collectors.toMap(Produto::getId, Function.identity()));
+    public Map<Integer, Pedido> findAll() {
+        List<Pedido> Pedidos = entityManager.createQuery("SELECT p FROM Pedido p WHERE p.aceite = false", Pedido.class).getResultList();
+        return Pedidos.stream().collect(Collectors.toMap(Pedido::getId, Function.identity()));
     }
 
     @Override
-    public Produto save(Produto produto) throws EntityExistsException {
+    public Pedido save(Pedido Pedido) throws EntityExistsException {
         try {
             entityManager.getTransaction().begin();
-            if (produto.getId() == null) {
-                entityManager.persist(produto);
+            if (Pedido.getId() == null) {
+                entityManager.persist(Pedido);
             } else {
-                produto = entityManager.merge(produto);
+                Pedido = entityManager.merge(Pedido);
             }
             entityManager.getTransaction().commit();
-            return produto;
+            return Pedido;
         } catch (ConstraintViolationException e) {
-            throw new EntityExistsException("Produto já cadastrado");
+            throw new EntityExistsException("Pedido já cadastrado");
         }
     }
 
     @Override
-    public void delete(Produto produto) throws DbIntegrityException {
+    public void delete(Pedido Pedido) throws DbIntegrityException {
         try {
             entityManager.getTransaction().begin();
-            if (!entityManager.contains(produto)) {
-                produto = entityManager.merge(produto);
+            if (!entityManager.contains(Pedido)) {
+                Pedido = entityManager.merge(Pedido);
             }
-            entityManager.remove(produto);
+            entityManager.remove(Pedido);
             entityManager.getTransaction().commit();
         } catch (RollbackException e) {
             throw new DbIntegrityException(e.getMessage());
@@ -64,9 +64,9 @@ public class ProdutoRepository implements SimpleRepository<Produto, Integer> {
 
     @Override
     public void deleteById(Integer id) throws DbIntegrityException {
-        Produto produto = findById(id);
-        if (produto != null) {
-            delete(produto);
+        Pedido Pedido = findById(id);
+        if (Pedido != null) {
+            delete(Pedido);
         }
     }
 }

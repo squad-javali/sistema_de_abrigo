@@ -13,7 +13,9 @@ import java.util.Objects;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "estoque")
+@Table(name = "estoque", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"id_produto", "id_centro"})
+})
 public class Estoque implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -23,11 +25,11 @@ public class Estoque implements Serializable {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "id_produto")
+    @JoinColumn(name = "id_produto",nullable = false)
     private Produto produto;
 
     @ManyToOne
-    @JoinColumn(name = "id_centro")
+    @JoinColumn(name = "id_centro",nullable = false)
     private CentroDeDistribuicao centro;
 
     private int quantidade;

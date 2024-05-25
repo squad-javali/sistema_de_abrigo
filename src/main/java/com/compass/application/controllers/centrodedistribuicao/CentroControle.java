@@ -1,12 +1,8 @@
 package com.compass.application.controllers.centrodedistribuicao;
 
-import com.compass.domain.CentroDeDistribuicao;
 import com.compass.services.CentroService;
+import com.compass.utils.LeitorDeDados;
 import lombok.AllArgsConstructor;
-
-import java.util.Map;
-
-import static com.compass.utils.LeitorDeDados.lerIntInterval;
 
 @AllArgsConstructor
 public class CentroControle {
@@ -18,12 +14,10 @@ public class CentroControle {
             System.out.println("Centro de Distribuição");
             System.out.println("1 - Listar Centro de Distribuição");
             System.out.println("2 - Voltar");
-            int opt = lerIntInterval("Opção Invalida: ", 1, 2);
+            System.out.print("Digite a opção desejada: ");
+            int opt = LeitorDeDados.lerIntInterval("Opção Invalida: ", 1, 2);
             if (opt == 1) {
-                Map<Integer,CentroDeDistribuicao> centros = service.findAll();
-                for (CentroDeDistribuicao centro : centros.values()) {
-                    System.out.println(centro);
-                }
+                LeitorDeDados.imprimirMap(service.findAll());
             } else break;
         }
     }

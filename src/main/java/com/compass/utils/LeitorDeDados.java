@@ -1,3 +1,4 @@
+
 package com.compass.utils;
 
 import com.compass.domain.exceptions.NoItemsRegisteredException;
@@ -101,4 +102,3 @@ public class LeitorDeDados {
     }
 
 }
-
