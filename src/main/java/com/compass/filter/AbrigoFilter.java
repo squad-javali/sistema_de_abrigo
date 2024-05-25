@@ -1,13 +1,7 @@
-package com.compass.application.filter;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import com.compass.application.entities.Abrigo;
-import com.compass.application.services.AbrigoService;
+package com.compass.filter;
 
 public class AbrigoFilter {
-
+/*
     private AbrigoService abrigoService;
 
     public AbrigoFilter(AbrigoService abrigoService) {
@@ -15,7 +9,7 @@ public class AbrigoFilter {
     }
 
     public List<Abrigo> filtrarPorCapacidade(int capacity) {
-        return abrigoService.listarTodosAbrigos().stream()
+        return abrigoService.findAll().stream()
                 .filter(abrigo -> abrigo.getCapacity() >= capacity)
                 .collect(Collectors.toList());
     }
@@ -24,6 +18,6 @@ public class AbrigoFilter {
         return abrigoService.listarTodosAbrigos().stream()
                 .filter(abrigo -> abrigo.getOccupancy() <= occupancy)
                 .collect(Collectors.toList());
-    }
+    }*/
 
 }

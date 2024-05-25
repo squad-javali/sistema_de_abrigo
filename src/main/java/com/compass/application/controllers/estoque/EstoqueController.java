@@ -7,7 +7,6 @@ import com.compass.domain.Produto;
 import com.compass.domain.exceptions.DbIntegrityException;
 import com.compass.domain.exceptions.EntityExistsException;
 import com.compass.domain.exceptions.NoItemsRegisteredException;
-import com.compass.services.CentroService;
 import com.compass.services.EstoqueService;
 import com.compass.services.ProdutoService;
 import com.compass.utils.LeitorDeDados;
@@ -21,13 +20,10 @@ import static com.compass.utils.LeitorDeDados.selecionarItem;
 public class EstoqueController {
 
     private EstoqueService estoqueService;
-    private CentroService centroService;
     private ProdutoService produtoService;
 
-    public void adicionar() {
+    public void adicionar(CentroDeDistribuicao centro) {
         try {
-
-            CentroDeDistribuicao centro = LeitorDeDados.selecionarItem("Selecione um Centro:", "centro de distribuição", centroService.findAll());
 
             Produto produto = LeitorDeDados.selecionarItem("Selecione um produto:", "produto", produtoService.findAll());
 
@@ -67,9 +63,8 @@ public class EstoqueController {
         }
     }
 
-    public void removerItens() {
+    public void removerItens(CentroDeDistribuicao centro) {
         try {
-            CentroDeDistribuicao centro = LeitorDeDados.selecionarItem("Selecione um Centro:", "centro de distribuição", centroService.findAll());
             Estoque estoque = LeitorDeDados.selecionarItem("Selecione um estoque:", "estoque", estoqueService.findAllByCentroId(centro.getId()));
             System.out.print("Digite a quantidade de itens:");
             int quantidadeSolicitada = LeitorDeDados.lerIntInterval("Valor Inválido:", 1, 1000);
@@ -92,8 +87,8 @@ public class EstoqueController {
         }
     }
 
-    public void listar() {
-        Map<Integer, Estoque> estoques = estoqueService.findAll();
+    public void listar(Integer id) {
+        Map<Integer, Estoque> estoques = estoqueService.findAllByCentroId(id);
         LeitorDeDados.imprimirMap(estoques);
     }
 

@@ -1,8 +1,8 @@
-package com.compass.application.validations;
+package com.compass.validations;
+
+import com.compass.domain.Abrigo;
 
 import java.util.regex.Pattern;
-
-import com.compass.application.entities.Abrigo;
 
 public class AbrigoValidation {
 
@@ -10,13 +10,13 @@ public class AbrigoValidation {
     "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     public static boolean validar(Abrigo abrigo) {
-        return validarNome(abrigo.getName()) &&
-               validarEndereco(abrigo.getAddress()) &&
-               validarResponsavel(abrigo.getResponsible()) &&
-               validarTelefone(abrigo.getPhone()) &&
+        return validarNome(abrigo.getNome()) &&
+               validarEndereco(abrigo.getEndereco()) &&
+               validarResponsavel(abrigo.getResponsavel()) &&
+               validarTelefone(abrigo.getTelefone()) &&
                validarEmail(abrigo.getEmail()) &&
-               validarCapacidade(abrigo.getCapacity()) &&
-               validarOcupacao(abrigo.getOccupancy());
+               validarCapacidade(abrigo.getCapacidade()) &&
+               validarOcupacao(abrigo.getOcupacao());
     }
 
     private static boolean validarNome(String name) {

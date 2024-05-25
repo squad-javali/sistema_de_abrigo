@@ -16,7 +16,6 @@ public class PedidoService {
         return repository.findById(id);
     }
 
-
     public void deleteById(Integer id) {
         repository.deleteById(id);
     }

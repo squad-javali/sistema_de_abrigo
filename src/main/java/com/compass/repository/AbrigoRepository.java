@@ -1,6 +1,7 @@
 package com.compass.repository;
 
-import com.compass.domain.Produto;
+
+import com.compass.domain.Abrigo;
 import com.compass.domain.exceptions.DbIntegrityException;
 import com.compass.domain.exceptions.EntityExistsException;
 import com.compass.utils.JpaUtil;
@@ -13,49 +14,49 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class AbrigoRepository implements SimpleRepository<Produto, Integer> {
+public class AbrigoRepository implements SimpleRepository<Abrigo, Integer> {
 
     private final EntityManager entityManager;
 
-    public ProdutoRepository() {
+    public AbrigoRepository() {
         this.entityManager = JpaUtil.getEntityManager();
     }
 
     @Override
-    public Produto findById(Integer id) {
-        return entityManager.find(Produto.class, id);
+    public Abrigo findById(Integer id) {
+        return entityManager.find(Abrigo.class, id);
     }
 
     @Override
-    public Map<Integer, Produto> findAll() {
-        List<Produto> produtos = entityManager.createQuery("SELECT p FROM Produto p", Produto.class).getResultList();
-        return produtos.stream().collect(Collectors.toMap(Produto::getId, Function.identity()));
+    public Map<Integer, Abrigo> findAll() {
+        List<Abrigo> abrigos = entityManager.createQuery("SELECT a FROM Abrigo a", Abrigo.class).getResultList();
+        return abrigos.stream().collect(Collectors.toMap(Abrigo::getId, Function.identity()));
     }
 
     @Override
-    public Produto save(Produto produto) throws EntityExistsException {
+    public Abrigo save(Abrigo abrigo) throws EntityExistsException {
         try {
             entityManager.getTransaction().begin();
-            if (produto.getId() == null) {
-                entityManager.persist(produto);
+            if (abrigo.getId() == null) {
+                entityManager.persist(abrigo);
             } else {
-                produto = entityManager.merge(produto);
+                abrigo = entityManager.merge(abrigo);
             }
             entityManager.getTransaction().commit();
-            return produto;
+            return abrigo;
         } catch (ConstraintViolationException e) {
             throw new EntityExistsException("Produto já cadastrado");
         }
     }
 
     @Override
-    public void delete(Produto produto) throws DbIntegrityException {
+    public void delete(Abrigo abrigo) throws DbIntegrityException {
         try {
             entityManager.getTransaction().begin();
-            if (!entityManager.contains(produto)) {
-                produto = entityManager.merge(produto);
+            if (!entityManager.contains(abrigo)) {
+                abrigo = entityManager.merge(abrigo);
             }
-            entityManager.remove(produto);
+            entityManager.remove(abrigo);
             entityManager.getTransaction().commit();
         } catch (RollbackException e) {
             throw new DbIntegrityException(e.getMessage());
@@ -64,9 +65,9 @@ public class AbrigoRepository implements SimpleRepository<Produto, Integer> {
 
     @Override
     public void deleteById(Integer id) throws DbIntegrityException {
-        Produto produto = findById(id);
-        if (produto != null) {
-            delete(produto);
+        Abrigo abrigo = findById(id);
+        if (abrigo != null) {
+            delete(abrigo);
         }
     }
 }

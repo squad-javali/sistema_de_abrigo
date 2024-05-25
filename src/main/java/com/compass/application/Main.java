@@ -1,59 +1,42 @@
 package com.compass.application;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
+import com.compass.application.controllers.abrigo.AbrigoController;
+import com.compass.application.controllers.centrodedistribuicao.CentroControle;
 import com.compass.application.controllers.checkout.CheckoutController;
 import com.compass.application.controllers.checkout.CheckoutMenu;
-import com.compass.domain.CentroDeDistribuicao;
-import com.compass.domain.Estoque;
-import com.compass.domain.ItemPedido;
-import com.compass.domain.Pedido;
-import com.compass.domain.Produto;
-import com.compass.domain.enums.RoupaSexo;
-import com.compass.domain.enums.RoupaTamanho;
-import com.compass.services.CentroService;
-import com.compass.services.EstoqueService;
-import com.compass.services.ItemPedidoService;
-import com.compass.services.PedidoService;
-import com.compass.services.ProdutoService;
+import com.compass.application.controllers.estoque.AbrigoMenu;
+import com.compass.application.controllers.estoque.EstoqueController;
+import com.compass.application.controllers.estoque.EstoqueMenu;
+import com.compass.application.controllers.produtos.ProdutoController;
+import com.compass.application.controllers.produtos.ProdutoMenu;
+import com.compass.services.*;
 import com.compass.utils.JpaUtil;
+import com.compass.utils.LeitorDeDados;
 
 
 public class Main {
     public static void main(String[] args) {
-
         JpaUtil.init();
-
+/*
         CentroService service = new CentroService();
-        CentroDeDistribuicao centro = new CentroDeDistribuicao(null, "Centro de Distribuição Esperança",
-                "Av. Boqueirão, 2450 - Igara, Canoas - RS, 92032-420");
-        CentroDeDistribuicao centro1 = new CentroDeDistribuicao(null, "Centro de Distribuição Prosperidade",
-                "Av. Borges de Medeiros 1501 Porto Alegre CEP 90119900");
-        CentroDeDistribuicao centro2 = new CentroDeDistribuicao(null, "Centro de Distribuição Reconstrução",
-                "R. Dr. Décio Martins Costa, 312 - Vila Eunice Nova, Cachoeirinha - RS, 94920-170");
-        service.save(centro);
-        service.save(centro1);
-        service.save(centro2);
-
+        AbrigoService abrigoService = new AbrigoService();
+        Abrigo abrigo = abrigoService.findById(2);
+        CentroDeDistribuicao centro = service.findById(1);
+        CentroDeDistribuicao centro1 = service.findById(2);
+        CentroDeDistribuicao centro2 = service.findById(3);
+        DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         PedidoService service2 = new PedidoService();
 
-        DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-
-        Pedido p1 = new Pedido(null, centro, LocalDate.parse("20/07/2022",fmt1), false);
-        Pedido p2 = new Pedido(null, centro1, LocalDate.parse("13/07/2022",fmt1), false);
-        Pedido p3 = new Pedido(null, centro2, LocalDate.parse("10/07/2022",fmt1), true);
+        Pedido p1 = new Pedido(null, abrigo, centro, LocalDate.parse("20/07/2022", fmt1), false, "as");
+        Pedido p2 = new Pedido(null, abrigo, centro1, LocalDate.parse("13/07/2022", fmt1), false, "as");
+        Pedido p3 = new Pedido(null, abrigo, centro2, LocalDate.parse("10/07/2022", fmt1), true, "as");
 
         service2.save(p1);
         service2.save(p2);
         service2.save(p3);
-
-
         ProdutoService serviceProd = new ProdutoService();
 
-        Produto prod1 = new Produto(null, "Arroz", RoupaTamanho.NULL, RoupaSexo.N);
-        serviceProd.save(prod1);
+        Produto prod1 = serviceProd.findById(1);
 
 
         ItemPedidoService service3 = new ItemPedidoService();
@@ -76,16 +59,43 @@ public class Main {
         service3.save(i7);
         service3.save(i8);
         service3.save(i9);
-
-        EstoqueService serviceEstoque = new EstoqueService();
-
-        serviceEstoque.save(new Estoque(null, prod1, centro1, 1000, 10000));
-
-
-        CheckoutMenu menu = new CheckoutMenu(new CheckoutController());
-
-        menu.menu();
-
-
+*/
+        loop:
+        while (true) {
+            System.out.println("1 - Gerenciar Centros de Distribuição");
+            System.out.println("2 - Gerenciar Produtos");
+            System.out.println("3 - Gerenciar Estoque");
+            System.out.println("4 - Gerenciar Abrigo");
+            System.out.println("5 - Gerenciar Checkout de pedido");
+            System.out.println("6 - Sair");
+            System.out.print("Digite a opção desejada: ");
+            int opt = LeitorDeDados.lerIntInterval("Opção inválida! Digite novamente: ", 1, 6);
+            switch (opt) {
+                case 1:
+                    CentroControle centroControle = new CentroControle(new CentroService());
+                    centroControle.menu();
+                    break;
+                case 2:
+                    ProdutoMenu produtoMenu = new ProdutoMenu(new ProdutoController(new ProdutoService()));
+                    produtoMenu.menu();
+                    break;
+                case 3:
+                    EstoqueMenu estoqueMenu = new EstoqueMenu(new EstoqueController(new EstoqueService(), new ProdutoService()), new CentroService());
+                    estoqueMenu.menu();
+                    break;
+                case 4:
+                    AbrigoMenu abrigoMenu = new AbrigoMenu(new AbrigoController(new AbrigoService()));
+                    abrigoMenu.menu();
+                    break;
+                case 5:
+                    CheckoutMenu checkoutMenu = new CheckoutMenu(new CheckoutController(new PedidoService(), new ItemPedidoService(), new EstoqueService()));
+                    checkoutMenu.menu();
+                    break;
+                default:
+                    LeitorDeDados.close();
+                    JpaUtil.close();
+                    break loop;
+            }
+        }
     }
 }

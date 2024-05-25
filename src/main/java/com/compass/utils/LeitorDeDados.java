@@ -57,6 +57,19 @@ public class LeitorDeDados {
         return value;
     }
 
+    public static Double lerDouble(String errorMsg) {
+        double value;
+        while (true) {
+            try {
+                value = Double.parseDouble(scanner.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.err.print(errorMsg);
+            }
+        }
+        return value;
+    }
+
     public static <T> T selecionarItem(String mensagem, String itemType, Map<Integer, T> items) throws NoItemsRegisteredException {
         if (items.isEmpty()) {
             throw new NoItemsRegisteredException(itemType);

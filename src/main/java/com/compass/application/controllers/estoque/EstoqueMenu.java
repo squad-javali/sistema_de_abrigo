@@ -1,14 +1,20 @@
 package com.compass.application.controllers.estoque;
 
+import com.compass.domain.CentroDeDistribuicao;
+import com.compass.services.CentroService;
 import lombok.AllArgsConstructor;
 
 import static com.compass.utils.LeitorDeDados.lerIntInterval;
+import static com.compass.utils.LeitorDeDados.selecionarItem;
+
 @AllArgsConstructor
 public class EstoqueMenu {
 
     private EstoqueController estoqueController;
+    private CentroService centroService;
 
     public void menu() {
+        CentroDeDistribuicao centro = selecionarItem("Selecione um centro","Centro",centroService.findAll());
         loop:
         while (true) {
             System.out.println("Estoque");
@@ -23,22 +29,22 @@ public class EstoqueMenu {
             int opcao = lerIntInterval("Opção Invalida: ", 1, 7);
             switch (opcao) {
                 case 1:
-                    estoqueController.adicionar();
+                    estoqueController.adicionar(centro);
                     break;
                 case 2:
-                    estoqueController.adicionarProduto();
+                    estoqueController.adicionarProduto(centro);
                     break;
                 case 3:
-                    estoqueController.removerItens();
+                    estoqueController.removerItens(centro);
                     break;
                 case 4:
-                    estoqueController.atualizar();
+                    estoqueController.atualizar(centro);
                     break;
                 case 5:
-                    estoqueController.remover();
+                    estoqueController.remover(centro);
                     break;
                 case 6:
-                    estoqueController.listar();
+                    estoqueController.listar(centro.getId());
                     break;
                 default:
                     break loop;
