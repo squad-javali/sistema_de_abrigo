@@ -19,7 +19,7 @@ public class UtilJPA implements Serializable {
         }
     }
 
-    private static EntityManager getManager(){
+    public static EntityManager getManager(){
         return manager.createEntityManager();
     }
 
