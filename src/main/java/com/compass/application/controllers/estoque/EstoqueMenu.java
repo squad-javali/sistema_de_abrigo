@@ -32,16 +32,16 @@ public class EstoqueMenu {
                     estoqueController.adicionar(centro);
                     break;
                 case 2:
-                    estoqueController.adicionarProduto(centro);
+                    estoqueController.adicionarProduto();
                     break;
                 case 3:
                     estoqueController.removerItens(centro);
                     break;
                 case 4:
-                    estoqueController.atualizar(centro);
+                    estoqueController.atualizar();
                     break;
                 case 5:
-                    estoqueController.remover(centro);
+                    estoqueController.remover();
                     break;
                 case 6:
                     estoqueController.listar(centro.getId());
