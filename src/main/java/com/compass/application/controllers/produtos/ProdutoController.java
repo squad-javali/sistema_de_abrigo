@@ -35,7 +35,7 @@ public class ProdutoController {
         try {
             produtoService.save(produto);
         } catch (EntityExistsException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -49,9 +49,9 @@ public class ProdutoController {
             Produto produto = LeitorDeDados.selecionarItem("Selecione um produto", "produto", produtoService.findAll());
             produtoService.deleteById(produto.getId());
         } catch (NoItemsRegisteredException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         } catch (DbIntegrityException e) {
-            System.err.println("O produto está cadastrado em um estoque.");
+            System.out.println("O produto está cadastrado em um estoque.");
         }
     }
 

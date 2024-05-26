@@ -1,5 +1,4 @@
-
-package com.compass.application.controllers.centrodedistribuicao;
+package com.compass.application.controllers.estoque;
 
 import com.compass.domain.CentroDeDistribuicao;
 import com.compass.domain.Estoque;
@@ -17,7 +16,7 @@ import java.util.Map;
 import static com.compass.utils.LeitorDeDados.selecionarItem;
 
 @AllArgsConstructor
-public class CentroController {
+public class EstoqueController {
 
     private EstoqueService estoqueService;
     private ProdutoService produtoService;
@@ -33,7 +32,7 @@ public class CentroController {
             Estoque estoque = new Estoque(null, produto, centro, quantidade, 1000);
             estoqueService.save(estoque);
         } catch (NoItemsRegisteredException | EntityExistsException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -101,7 +100,7 @@ public class CentroController {
             estoque.setQuantidade(quantidade);
             estoque.setProduto(produto);
             estoqueService.save(estoque);
-        } catch (NoItemsRegisteredException e) {
+        } catch (NoItemsRegisteredException | EntityExistsException e) {
             System.out.println(e.getMessage());
         }
     }

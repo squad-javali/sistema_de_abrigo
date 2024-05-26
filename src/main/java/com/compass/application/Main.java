@@ -2,13 +2,12 @@ package com.compass.application;
 
 import com.compass.application.controllers.abrigo.AbrigoController;
 import com.compass.application.controllers.centrodedistribuicao.CentroMenu;
-import com.compass.application.controllers.checkout.CheckoutController;
-import com.compass.application.controllers.checkout.CheckoutMenu;
 import com.compass.application.controllers.estoque.AbrigoMenu;
-import com.compass.application.controllers.centrodedistribuicao.CentroController;
 import com.compass.application.controllers.produtos.ProdutoController;
 import com.compass.application.controllers.produtos.ProdutoMenu;
-import com.compass.services.*;
+import com.compass.services.AbrigoService;
+import com.compass.services.CentroService;
+import com.compass.services.ProdutoService;
 import com.compass.utils.JpaUtil;
 import com.compass.utils.LeitorDeDados;
 
@@ -16,6 +15,7 @@ import com.compass.utils.LeitorDeDados;
 public class Main {
     public static void main(String[] args) {
         JpaUtil.init();
+        int opt;
 /*
         CentroService service = new CentroService();
         AbrigoService abrigoService = new AbrigoService();
@@ -64,14 +64,13 @@ public class Main {
             System.out.println("1 - Gerenciar Centros de Distribuição");
             System.out.println("2 - Gerenciar Produtos");
             System.out.println("3 - Gerenciar Abrigo");
-            System.out.println("4 - Gerenciar Checkout de pedido");
-            System.out.println("5 - Sair");
+            System.out.println("4 - Sair");
             System.out.print("Digite a opção desejada: ");
-            int opt = LeitorDeDados.lerIntInterval("Opção inválida! Digite novamente: ", 1, 6);
+            opt = LeitorDeDados.lerIntInterval("Opção inválida! Digite novamente: ", 1, 4);
             switch (opt) {
                 case 1:
-                    CentroMenu centroControle = new CentroMenu(new CentroController(new EstoqueService(), new ProdutoService()),new CentroService());
-                    centroControle.menu();
+                    CentroMenu centroMenu = new CentroMenu(new CentroService());
+                    centroMenu.menu();
                     break;
                 case 2:
                     ProdutoMenu produtoMenu = new ProdutoMenu(new ProdutoController(new ProdutoService()));
@@ -80,10 +79,6 @@ public class Main {
                 case 3:
                     AbrigoMenu abrigoMenu = new AbrigoMenu(new AbrigoController(new AbrigoService()));
                     abrigoMenu.menu();
-                    break;
-                case 4:
-                    CheckoutMenu checkoutMenu = new CheckoutMenu(new CheckoutController(new PedidoService(), new ItemPedidoService(), new EstoqueService()));
-                    checkoutMenu.menu();
                     break;
                 default:
                     LeitorDeDados.close();

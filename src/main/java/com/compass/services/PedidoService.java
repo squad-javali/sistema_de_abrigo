@@ -24,4 +24,7 @@ public class PedidoService {
         return repository.findAll();
     }
 
+    public Map<Integer, Pedido> findByCentroId(Integer id) {
+        return repository.findByCentroId(id);
+    }
 }

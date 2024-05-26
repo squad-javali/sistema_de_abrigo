@@ -22,8 +22,8 @@ public class CheckoutController {
     private EstoqueService estoqueService;
 
 
-    public Pedido listarPedidosPendentes() {
-        return LeitorDeDados.selecionarItem("Selecione um pedido", "Pedido", pedidoService.findAll());
+    public Pedido listarPedidosPendentes(Integer id) {
+        return LeitorDeDados.selecionarItem("Selecione um pedido", "Pedido", pedidoService.findByCentroId(id));
     }
 
     public java.util.List<ItemPedido> listarItensPedido(int pedidoId) {
