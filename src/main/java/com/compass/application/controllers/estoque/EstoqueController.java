@@ -36,9 +36,9 @@ public class EstoqueController {
         }
     }
 
-    public void adicionarProduto() {
+    public void adicionarProduto(Integer id) {
         try {
-            Estoque estoque = LeitorDeDados.selecionarItem("Selecione um estoque:", "estoque", estoqueService.findAll());
+            Estoque estoque = LeitorDeDados.selecionarItem("Selecione um estoque:", "estoque", estoqueService.findAllByCentroId(id));
             System.out.print("Digite a quantidade de itens:");
             int quantidade = LeitorDeDados.lerIntInterval("Valor Invalido:", 1, 1000);
             if (estoque.getQuantidade() + quantidade > 1000) {
@@ -51,20 +51,20 @@ public class EstoqueController {
         }
     }
 
-    public void remover() {
+    public void remover(Integer id) {
         try {
-            Estoque estoque = LeitorDeDados.selecionarItem("Selecione um estoque:", "estoque", estoqueService.findAll());
+            Estoque estoque = LeitorDeDados.selecionarItem("Selecione um estoque:", "estoque", estoqueService.findAllByCentroId(id));
             estoqueService.deleteById(estoque.getId());
         } catch (NoItemsRegisteredException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         } catch (DbIntegrityException e) {
-            System.err.println("O produto está cadastrado em um estoque");
+            System.out.println("O produto está cadastrado em um estoque");
         }
     }
 
-    public void removerItens(CentroDeDistribuicao centro) {
+    public void removerItens(Integer id) {
         try {
-            Estoque estoque = LeitorDeDados.selecionarItem("Selecione um estoque:", "estoque", estoqueService.findAllByCentroId(centro.getId()));
+            Estoque estoque = LeitorDeDados.selecionarItem("Selecione um estoque:", "estoque", estoqueService.findAllByCentroId(id));
             System.out.print("Digite a quantidade de itens:");
             int quantidadeSolicitada = LeitorDeDados.lerIntInterval("Valor Inválido:", 1, 1000);
 
@@ -91,9 +91,9 @@ public class EstoqueController {
         LeitorDeDados.imprimirMap(estoques);
     }
 
-    public void atualizar() {
+    public void atualizar(Integer Id) {
         try {
-            Estoque estoque = selecionarItem("Selecione um estoque:", "estoque", estoqueService.findAll());
+            Estoque estoque = selecionarItem("Selecione um estoque:", "estoque", estoqueService.findAllByCentroId(Id));
             Produto produto = LeitorDeDados.selecionarItem("Selecione um produto:", "produto", produtoService.findAll());
             System.out.print("Digite a quantidade de itens:");
             int quantidade = LeitorDeDados.lerIntInterval("Valor Invalido:", 1, 1000);
