@@ -32,6 +32,13 @@ public class PedidoRepository implements SimpleRepository<Pedido, Integer> {
         return Pedidos.stream().collect(Collectors.toMap(Pedido::getId, Function.identity()));
     }
 
+    public Map<Integer, Pedido> findByCentroId(Integer centroId) {
+        List<Pedido> pedidos = entityManager.createQuery("SELECT p FROM Pedido p WHERE p.aceite = false AND p.centro.id = :centroId", Pedido.class)
+                .setParameter("centroId", centroId)
+                .getResultList();
+        return pedidos.stream().collect(Collectors.toMap(Pedido::getId, Function.identity()));
+    }
+
     @Override
     public Pedido save(Pedido Pedido) throws EntityExistsException {
         try {
@@ -45,6 +52,10 @@ public class PedidoRepository implements SimpleRepository<Pedido, Integer> {
             return Pedido;
         } catch (ConstraintViolationException e) {
             throw new EntityExistsException("Pedido já cadastrado");
+        } finally {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
         }
     }
 
@@ -59,6 +70,10 @@ public class PedidoRepository implements SimpleRepository<Pedido, Integer> {
             entityManager.getTransaction().commit();
         } catch (RollbackException e) {
             throw new DbIntegrityException(e.getMessage());
+        } finally {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
         }
     }
 

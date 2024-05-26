@@ -52,6 +52,10 @@ public class ItemPedidoRepository implements SimpleRepository<ItemPedido, Intege
             return ItemPedido;
         } catch (ConstraintViolationException e) {
             throw new EntityExistsException("ItemPedido já cadastrado");
+        } finally {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
         }
     }
 
@@ -66,6 +70,10 @@ public class ItemPedidoRepository implements SimpleRepository<ItemPedido, Intege
             entityManager.getTransaction().commit();
         } catch (RollbackException e) {
             throw new DbIntegrityException(e.getMessage());
+        } finally {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
         }
     }
 

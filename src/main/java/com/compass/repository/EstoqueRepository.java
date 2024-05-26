@@ -53,6 +53,10 @@ public class EstoqueRepository implements SimpleRepository<Estoque, Integer> {
         } catch (PersistenceException e) {
             System.out.println(e.getMessage());
             throw new EntityExistsException("Estoque com este produto e centro de distribuição já existe.");
+        } finally {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
         }
         return estoque;
     }
@@ -68,6 +72,10 @@ public class EstoqueRepository implements SimpleRepository<Estoque, Integer> {
             entityManager.getTransaction().commit();
         } catch (RollbackException e) {
             throw new DbIntegrityException(e.getMessage());
+        } finally {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
         }
     }
 

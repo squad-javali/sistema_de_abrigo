@@ -46,6 +46,10 @@ public class AbrigoRepository implements SimpleRepository<Abrigo, Integer> {
             return abrigo;
         } catch (ConstraintViolationException e) {
             throw new EntityExistsException("Produto já cadastrado");
+        } finally {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
         }
     }
 
@@ -60,6 +64,10 @@ public class AbrigoRepository implements SimpleRepository<Abrigo, Integer> {
             entityManager.getTransaction().commit();
         } catch (RollbackException e) {
             throw new DbIntegrityException(e.getMessage());
+        } finally {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
         }
     }
 

@@ -45,6 +45,10 @@ public class ProdutoRepository implements SimpleRepository<Produto, Integer> {
             return produto;
         } catch (ConstraintViolationException e) {
             throw new EntityExistsException("Produto já cadastrado");
+        } finally {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
         }
     }
 
@@ -59,6 +63,10 @@ public class ProdutoRepository implements SimpleRepository<Produto, Integer> {
             entityManager.getTransaction().commit();
         } catch (RollbackException e) {
             throw new DbIntegrityException(e.getMessage());
+        } finally {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
         }
     }
 

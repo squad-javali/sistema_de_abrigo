@@ -43,6 +43,10 @@ public class CentroRepository implements SimpleRepository<CentroDeDistribuicao, 
             return centro;
         } catch (RollbackException e) {
             throw new DbIntegrityException(e.getMessage());
+        } finally {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
         }
     }
 
