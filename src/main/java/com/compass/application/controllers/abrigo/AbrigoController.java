@@ -1,6 +1,7 @@
 package com.compass.application.controllers.abrigo;
 
 import com.compass.domain.Abrigo;
+import com.compass.domain.exceptions.DbIntegrityException;
 import com.compass.services.AbrigoService;
 import com.compass.utils.LeitorDeDados;
 import com.compass.validations.AbrigoValidation;
@@ -75,10 +76,14 @@ public class AbrigoController {
     }
 
     public void deletarAbrigo() {
-        System.out.println("ID do Abrigo a ser deletado: ");
-        Abrigo abrigo = LeitorDeDados.selecionarItem("Selecione um abrigo","abrigo",abrigoService.findAll());
-        abrigoService.deleteById(abrigo.getId());
+        try {
+            System.out.println("ID do Abrigo a ser deletado: ");
+            Abrigo abrigo = LeitorDeDados.selecionarItem("Selecione um abrigo","abrigo",abrigoService.findAll());
+            abrigoService.deleteById(abrigo.getId());
             System.out.println("Abrigo deletado com sucesso!");
+        } catch (DbIntegrityException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
 
