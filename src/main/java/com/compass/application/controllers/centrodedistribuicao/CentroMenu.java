@@ -1,4 +1,4 @@
-package com.compass.application.controllers.estoque;
+package com.compass.application.controllers.centrodedistribuicao;
 
 import com.compass.domain.CentroDeDistribuicao;
 import com.compass.services.CentroService;
@@ -8,13 +8,13 @@ import static com.compass.utils.LeitorDeDados.lerIntInterval;
 import static com.compass.utils.LeitorDeDados.selecionarItem;
 
 @AllArgsConstructor
-public class EstoqueMenu {
+public class CentroMenu {
 
-    private EstoqueController estoqueController;
+    private CentroController centroController;
     private CentroService centroService;
 
     public void menu() {
-        CentroDeDistribuicao centro = selecionarItem("Selecione um centro","Centro",centroService.findAll());
+        CentroDeDistribuicao centro = selecionarItem("Selecione um centro", "Centro", centroService.findAll());
         loop:
         while (true) {
             System.out.println("Estoque");
@@ -29,22 +29,22 @@ public class EstoqueMenu {
             int opcao = lerIntInterval("Opção Invalida: ", 1, 7);
             switch (opcao) {
                 case 1:
-                    estoqueController.adicionar(centro);
+                    centroController.adicionar(centro);
                     break;
                 case 2:
-                    estoqueController.adicionarProduto();
+                    centroController.adicionarProduto();
                     break;
                 case 3:
-                    estoqueController.removerItens(centro);
+                    centroController.removerItens(centro);
                     break;
                 case 4:
-                    estoqueController.atualizar();
+                    centroController.atualizar();
                     break;
                 case 5:
-                    estoqueController.remover();
+                    centroController.remover();
                     break;
                 case 6:
-                    estoqueController.listar(centro.getId());
+                    centroController.listar(centro.getId());
                     break;
                 default:
                     break loop;

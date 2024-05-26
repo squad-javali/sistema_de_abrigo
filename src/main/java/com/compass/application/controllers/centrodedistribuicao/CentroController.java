@@ -1,5 +1,5 @@
 
-package com.compass.application.controllers.estoque;
+package com.compass.application.controllers.centrodedistribuicao;
 
 import com.compass.domain.CentroDeDistribuicao;
 import com.compass.domain.Estoque;
@@ -17,7 +17,7 @@ import java.util.Map;
 import static com.compass.utils.LeitorDeDados.selecionarItem;
 
 @AllArgsConstructor
-public class EstoqueController {
+public class CentroController {
 
     private EstoqueService estoqueService;
     private ProdutoService produtoService;
@@ -81,7 +81,7 @@ public class EstoqueController {
             }
 
             System.out.println("Valor de estoque: " + estoque.getQuantidade());
-            estoqueService.update(estoque);
+            estoqueService.save(estoque);
         } catch (NoItemsRegisteredException e) {
             System.out.println(e.getMessage());
         }
@@ -95,10 +95,12 @@ public class EstoqueController {
     public void atualizar() {
         try {
             Estoque estoque = selecionarItem("Selecione um estoque:", "estoque", estoqueService.findAll());
+            Produto produto = LeitorDeDados.selecionarItem("Selecione um produto:", "produto", produtoService.findAll());
             System.out.print("Digite a quantidade de itens:");
             int quantidade = LeitorDeDados.lerIntInterval("Valor Invalido:", 1, 1000);
             estoque.setQuantidade(quantidade);
-            estoqueService.update(estoque);
+            estoque.setProduto(produto);
+            estoqueService.save(estoque);
         } catch (NoItemsRegisteredException e) {
             System.out.println(e.getMessage());
         }

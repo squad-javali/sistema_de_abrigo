@@ -1,12 +1,11 @@
 package com.compass.application;
 
 import com.compass.application.controllers.abrigo.AbrigoController;
-import com.compass.application.controllers.centrodedistribuicao.CentroControle;
+import com.compass.application.controllers.centrodedistribuicao.CentroMenu;
 import com.compass.application.controllers.checkout.CheckoutController;
 import com.compass.application.controllers.checkout.CheckoutMenu;
 import com.compass.application.controllers.estoque.AbrigoMenu;
-import com.compass.application.controllers.estoque.EstoqueController;
-import com.compass.application.controllers.estoque.EstoqueMenu;
+import com.compass.application.controllers.centrodedistribuicao.CentroController;
 import com.compass.application.controllers.produtos.ProdutoController;
 import com.compass.application.controllers.produtos.ProdutoMenu;
 import com.compass.services.*;
@@ -64,15 +63,14 @@ public class Main {
         while (true) {
             System.out.println("1 - Gerenciar Centros de Distribuição");
             System.out.println("2 - Gerenciar Produtos");
-            System.out.println("3 - Gerenciar Estoque");
-            System.out.println("4 - Gerenciar Abrigo");
-            System.out.println("5 - Gerenciar Checkout de pedido");
-            System.out.println("6 - Sair");
+            System.out.println("3 - Gerenciar Abrigo");
+            System.out.println("4 - Gerenciar Checkout de pedido");
+            System.out.println("5 - Sair");
             System.out.print("Digite a opção desejada: ");
             int opt = LeitorDeDados.lerIntInterval("Opção inválida! Digite novamente: ", 1, 6);
             switch (opt) {
                 case 1:
-                    CentroControle centroControle = new CentroControle(new CentroService());
+                    CentroMenu centroControle = new CentroMenu(new CentroController(new EstoqueService(), new ProdutoService()),new CentroService());
                     centroControle.menu();
                     break;
                 case 2:
@@ -80,14 +78,10 @@ public class Main {
                     produtoMenu.menu();
                     break;
                 case 3:
-                    EstoqueMenu estoqueMenu = new EstoqueMenu(new EstoqueController(new EstoqueService(), new ProdutoService()), new CentroService());
-                    estoqueMenu.menu();
-                    break;
-                case 4:
                     AbrigoMenu abrigoMenu = new AbrigoMenu(new AbrigoController(new AbrigoService()));
                     abrigoMenu.menu();
                     break;
-                case 5:
+                case 4:
                     CheckoutMenu checkoutMenu = new CheckoutMenu(new CheckoutController(new PedidoService(), new ItemPedidoService(), new EstoqueService()));
                     checkoutMenu.menu();
                     break;

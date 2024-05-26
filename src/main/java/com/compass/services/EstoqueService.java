@@ -16,10 +16,6 @@ public class EstoqueService {
         return repository.findById(id);
     }
 
-    public void update(Estoque estoque) {
-        repository.save(estoque);
-    }
-
     public void deleteById(Integer id) {
         repository.deleteById(id);
     }
