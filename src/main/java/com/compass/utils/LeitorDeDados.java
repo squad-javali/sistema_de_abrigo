@@ -18,27 +18,10 @@ public class LeitorDeDados {
                 if (value >= min && value <= max) {
                     break;
                 } else {
-                    System.err.print("Valor fora do intervalo permitido! " + errorMsg);
+                    System.out.print("Valor fora do intervalo permitido! " + errorMsg);
                 }
             } catch (NumberFormatException e) {
-                System.err.print(errorMsg);
-            }
-        }
-        return value;
-    }
-
-    public static Long lerLongInterval(String errorMsg, long min, long max) {
-        Long value;
-        while (true) {
-            try {
-                value = Long.parseLong(scanner.nextLine());
-                if (value >= min && value <= max) {
-                    break;
-                } else {
-                    System.err.print("Valor fora do intervalo permitido! " + errorMsg);
-                }
-            } catch (NumberFormatException e) {
-                System.err.print(errorMsg);
+                System.out.print(errorMsg);
             }
         }
         return value;
@@ -51,7 +34,7 @@ public class LeitorDeDados {
                 value = Integer.parseInt(scanner.nextLine());
                 break;
             } catch (NumberFormatException e) {
-                System.err.print(errorMsg);
+                System.out.print(errorMsg);
             }
         }
         return value;
@@ -64,7 +47,7 @@ public class LeitorDeDados {
                 value = Double.parseDouble(scanner.nextLine());
                 break;
             } catch (NumberFormatException e) {
-                System.err.print(errorMsg);
+                System.out.print(errorMsg);
             }
         }
         return value;
@@ -81,22 +64,12 @@ public class LeitorDeDados {
         do {
             int id = lerInt("ID invalido:");
             item = items.get(id);
+            if (item == null) {
+                System.err.print("Id invalido, Digite novamente:");
+            }
         } while (item == null);
 
         return item;
-    }
-
-    public static Long lerLong(String errorMsg) {
-        Long value;
-        while (true) {
-            try {
-                value = Long.parseLong(scanner.nextLine());
-                break;
-            } catch (NumberFormatException e) {
-                System.err.print(errorMsg);
-            }
-        }
-        return value;
     }
 
     public static String lerString(String mensagem) {
