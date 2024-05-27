@@ -1,13 +1,14 @@
 package com.compass.application.controllers.estoque;
 
 import com.compass.domain.CentroDeDistribuicao;
-import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import static com.compass.utils.LeitorDeDados.lerIntInterval;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class EstoqueMenu {
-
+    @NonNull
     private EstoqueController estoqueController;
 
     public void menu(CentroDeDistribuicao centro) {

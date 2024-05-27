@@ -1,20 +1,22 @@
 package com.compass.application.controllers.produtos;
 
-import com.compass.domain.exceptions.DbIntegrityException;
 import com.compass.domain.Produto;
 import com.compass.domain.enums.RoupaSexo;
 import com.compass.domain.enums.RoupaTamanho;
+import com.compass.domain.exceptions.DbIntegrityException;
 import com.compass.domain.exceptions.EntityExistsException;
 import com.compass.domain.exceptions.NoItemsRegisteredException;
 import com.compass.services.ProdutoService;
 import com.compass.utils.LeitorDeDados;
-import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProdutoController {
 
+    @NonNull
     private final ProdutoService produtoService;
 
     public void adicionar() {
@@ -57,7 +59,6 @@ public class ProdutoController {
 
     public void atualizar() {
         Produto produto = LeitorDeDados.selecionarItem("Selecione um produto:", "produto", produtoService.findAll());
-
         String descricao = LeitorDeDados.lerString("Digite o nome do item");
 
         if (produto.getTamanho() != RoupaTamanho.NULL) {

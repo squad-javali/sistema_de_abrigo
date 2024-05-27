@@ -7,13 +7,14 @@ import com.compass.application.controllers.estoque.EstoqueMenu;
 import com.compass.domain.CentroDeDistribuicao;
 import com.compass.services.*;
 import com.compass.utils.LeitorDeDados;
-import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import static com.compass.utils.LeitorDeDados.selecionarItem;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CentroMenu {
-
+    @NonNull
     private CentroService centroService;
 
     public void menu() {

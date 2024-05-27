@@ -1,12 +1,12 @@
 package com.compass.application.controllers.abrigo;
 
-import com.compass.application.controllers.abrigo.AbrigoController;
-import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import static com.compass.utils.LeitorDeDados.lerIntInterval;
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AbrigoMenu {
-
+    @NonNull
     private AbrigoController abrigoController;
 
     public void menu(){

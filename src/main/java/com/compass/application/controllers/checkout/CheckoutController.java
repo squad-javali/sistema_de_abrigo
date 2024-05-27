@@ -8,17 +8,18 @@ import com.compass.services.ItemPedidoService;
 import com.compass.services.PedidoService;
 import com.compass.utils.LeitorDeDados;
 import jakarta.persistence.NoResultException;
-import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 
-import static com.compass.utils.LeitorDeDados.imprimirMap;
-
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CheckoutController {
-
+    @NonNull
     private PedidoService pedidoService;
+    @NonNull
     private ItemPedidoService itemPedidoService;
+    @NonNull
     private EstoqueService estoqueService;
 
 
@@ -28,14 +29,14 @@ public class CheckoutController {
 
     public java.util.List<ItemPedido> listarItensPedido(int pedidoId) {
         java.util.Map<Integer, ItemPedido> list = itemPedidoService.findByPedidoId(pedidoId);
-        imprimirMap(list);
+        LeitorDeDados.imprimirMap(list);
         return new ArrayList<>(list.values());
     }
 
     public void abaterEstoque(java.util.List<ItemPedido> lista, Pedido pedido) {
         try {
             for (ItemPedido itemPedido : lista) {
-                Estoque estoque = estoqueService.findByProdutoId(itemPedido.getProduto().getId());
+                Estoque estoque = estoqueService.findByProdutoId(itemPedido.getProduto().getId(), pedido.getCentro().getId());
                 int qtde = estoque.getQuantidade() - itemPedido.getQuantidade();
                 estoque.setQuantidade(qtde);
                 estoqueService.save(estoque);

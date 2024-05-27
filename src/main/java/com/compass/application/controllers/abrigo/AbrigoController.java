@@ -5,11 +5,12 @@ import com.compass.domain.exceptions.DbIntegrityException;
 import com.compass.services.AbrigoService;
 import com.compass.utils.LeitorDeDados;
 import com.compass.validations.AbrigoValidation;
-import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AbrigoController {
-
+    @NonNull
     private final AbrigoService abrigoService;
 
     public void cadastrarAbrigo() {
@@ -23,7 +24,7 @@ public class AbrigoController {
         System.out.println("Digite a ocupação:");
         Double ocupacao = LeitorDeDados.lerDouble("Valor inválido");
 
-        Abrigo abrigo = new Abrigo(null,nome, endereco, responsavel,telefone, email, capacidade, ocupacao);
+        Abrigo abrigo = new Abrigo(null, nome, endereco, responsavel, telefone, email, capacidade, ocupacao);
         if (AbrigoValidation.validar(abrigo)) {
             abrigoService.save(abrigo);
             System.out.println("Abrigo cadastrado com sucesso!");
@@ -37,7 +38,7 @@ public class AbrigoController {
     }
 
     public void atualizarAbrigo() {
-        Abrigo abrigo = LeitorDeDados.selecionarItem("Selecione um Abrigo:","abrigo",abrigoService.findAll());
+        Abrigo abrigo = LeitorDeDados.selecionarItem("Selecione um Abrigo:", "abrigo", abrigoService.findAll());
 
         System.out.println("Nome (" + abrigo.getNome() + "): ");
         String name = LeitorDeDados.lerString("Digite um novo nome");
@@ -60,7 +61,7 @@ public class AbrigoController {
         if (!email.isEmpty()) abrigo.setEmail(email);
 
         System.out.println("Capacidade (" + abrigo.getCapacidade() + "): ");
-        int capacityStr = LeitorDeDados.lerIntInterval("Digite uma nova capacidade",1,200);
+        int capacityStr = LeitorDeDados.lerIntInterval("Digite uma nova capacidade", 1, 200);
         abrigo.setCapacidade(capacityStr);
 
         System.out.println("Ocupação (%) (" + abrigo.getOcupacao() + "): ");
@@ -78,7 +79,7 @@ public class AbrigoController {
     public void deletarAbrigo() {
         try {
             System.out.println("ID do Abrigo a ser deletado: ");
-            Abrigo abrigo = LeitorDeDados.selecionarItem("Selecione um abrigo","abrigo",abrigoService.findAll());
+            Abrigo abrigo = LeitorDeDados.selecionarItem("Selecione um abrigo", "abrigo", abrigoService.findAll());
             abrigoService.deleteById(abrigo.getId());
             System.out.println("Abrigo deletado com sucesso!");
         } catch (DbIntegrityException e) {

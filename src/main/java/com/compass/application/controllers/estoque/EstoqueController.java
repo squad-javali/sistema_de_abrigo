@@ -9,16 +9,18 @@ import com.compass.domain.exceptions.NoItemsRegisteredException;
 import com.compass.services.EstoqueService;
 import com.compass.services.ProdutoService;
 import com.compass.utils.LeitorDeDados;
-import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 
 import static com.compass.utils.LeitorDeDados.selecionarItem;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class EstoqueController {
-
+    @NonNull
     private EstoqueService estoqueService;
+    @NonNull
     private ProdutoService produtoService;
 
     public void adicionar(CentroDeDistribuicao centro) {

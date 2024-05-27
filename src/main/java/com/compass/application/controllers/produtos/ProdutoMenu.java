@@ -1,14 +1,13 @@
 package com.compass.application.controllers.produtos;
 
-import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import static com.compass.utils.LeitorDeDados.lerIntInterval;
-
-@AllArgsConstructor
 @RequiredArgsConstructor
 public class ProdutoMenu {
 
+    @NonNull
     private ProdutoController produtoController;
 
     public void menu() {

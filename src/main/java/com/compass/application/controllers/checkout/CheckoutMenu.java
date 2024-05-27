@@ -4,16 +4,17 @@ import com.compass.domain.CentroDeDistribuicao;
 import com.compass.domain.ItemPedido;
 import com.compass.domain.Pedido;
 import com.compass.domain.exceptions.NoItemsRegisteredException;
-import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 import static com.compass.utils.LeitorDeDados.lerIntInterval;
 import static com.compass.utils.LeitorDeDados.lerString;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CheckoutMenu {
-
+    @NonNull
     private CheckoutController checkoutController;
 
     public void menu(CentroDeDistribuicao centro) {
