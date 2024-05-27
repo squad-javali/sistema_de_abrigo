@@ -28,10 +28,10 @@ public class Pedido implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_centro")
+    @ToString.Exclude
     private CentroDeDistribuicao centro;
 
     private LocalDate data_pedido;
     private boolean aceite;
     private String motivoRecusa;
-
 }

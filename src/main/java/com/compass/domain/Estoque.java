@@ -30,6 +30,7 @@ public class Estoque implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_centro",nullable = false)
+    @ToString.Exclude
     private CentroDeDistribuicao centro;
 
     private int quantidade;
@@ -47,4 +48,5 @@ public class Estoque implements Serializable {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
 }
