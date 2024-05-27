@@ -64,6 +64,7 @@ public class EstoqueController {
         try {
             Estoque estoque = LeitorDeDados.selecionarItem("Selecione um estoque:", "estoque", estoqueService.findAllByCentroId(id));
             estoqueService.deleteById(estoque.getId());
+            System.out.println("Estoque removido com sucesso");
         } catch (NoItemsRegisteredException e) {
             System.out.println(e.getMessage());
         } catch (DbIntegrityException e) {
