@@ -38,7 +38,10 @@ public class CheckoutController {
             for (ItemPedido itemPedido : lista) {
                 Estoque estoque = estoqueService.findByProdutoId(itemPedido.getProduto().getId(), pedido.getCentro().getId());
                 int qtde = estoque.getQuantidade() - itemPedido.getQuantidade();
+                System.out.println(itemPedido.getProduto().getDescricao());
+                System.out.println("Estoque: "+ estoque.getQuantidade());
                 estoque.setQuantidade(qtde);
+                System.out.println("Estoque Atual: "+ estoque.getQuantidade());
                 estoqueService.save(estoque);
             }
             pedido.setAceite(true);
