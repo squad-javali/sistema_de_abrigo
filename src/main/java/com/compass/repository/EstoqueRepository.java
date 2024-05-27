@@ -87,9 +87,9 @@ public class EstoqueRepository implements SimpleRepository<Estoque, Integer> {
         }
     }
 
-    public Estoque findByProdutoId(Integer id) {
-        Estoque estoque = entityManager.createQuery("SELECT e FROM Estoque e WHERE e.produto.id = :produtoId", Estoque.class)
-        .setParameter("produtoId", id).getSingleResult();
-        return estoque;
+    public Estoque findByProdutoId(Integer produtoId, Integer centroId) {
+        return entityManager.createQuery("SELECT e FROM Estoque e WHERE e.produto.id = :produtoId AND e.centro.id = :centroId ", Estoque.class)
+        .setParameter("produtoId", produtoId).setParameter("centroId",centroId)
+                .getSingleResult();
     }
 }

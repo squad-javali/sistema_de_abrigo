@@ -28,7 +28,7 @@ public class EstoqueService {
         return repository.findAllByCentroId(id);
     }
 
-    public Estoque findByProdutoId(Integer id) {
-        return repository.findByProdutoId(id);
+    public Estoque findByProdutoId(Integer produtoId, Integer centroId) {
+        return repository.findByProdutoId(produtoId, centroId);
     }
 }

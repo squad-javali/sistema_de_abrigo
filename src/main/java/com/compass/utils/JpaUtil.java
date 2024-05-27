@@ -3,6 +3,7 @@ package com.compass.utils;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+
 import java.util.logging.Level;
 
 public class JpaUtil {

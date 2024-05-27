@@ -7,9 +7,10 @@ public enum RoupaTamanho {
     Infantil(1),
     PP(2),
     P(3),
-    G(4),
-    GG(5),
-    NULL(6);
+    M(4),
+    G(5),
+    GG(6),
+    NULL(7);
 
     private final int code;
 
@@ -27,21 +28,14 @@ public enum RoupaTamanho {
     }
 
     public static RoupaTamanho fromString(String size) {
-        switch (size.toUpperCase()) {
-            case "INFANTIL":
-                return Infantil;
-            case "PP":
-                return PP;
-            case "P":
-                return P;
-            case "G":
-                return G;
-            case "GG":
-                return GG;
-            case "NULL":
-                return NULL;
-            default:
-                throw new IllegalArgumentException("Invalid size");
-        }
+        return switch (size.toUpperCase()) {
+            case "INFANTIL" -> Infantil;
+            case "PP" -> PP;
+            case "P" -> P;
+            case "G" -> G;
+            case "GG" -> GG;
+            case "NULL" -> NULL;
+            default -> throw new IllegalArgumentException("Invalid size");
+        };
     }
 }
