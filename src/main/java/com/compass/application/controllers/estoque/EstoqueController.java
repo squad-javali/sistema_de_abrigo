@@ -33,6 +33,7 @@ public class EstoqueController {
 
             Estoque estoque = new Estoque(null, produto, centro, quantidade, 1000);
             estoqueService.save(estoque);
+            System.out.println("Estoque cadastrado com sucesso");
         } catch (NoItemsRegisteredException | EntityExistsException e) {
             System.out.println(e.getMessage());
         }
@@ -46,8 +47,14 @@ public class EstoqueController {
             if (estoque.getQuantidade() + quantidade > 1000) {
                 int excedente = (estoque.getQuantidade() + quantidade) - 1000;
                 System.out.println("O valor excedeu o limite");
-                System.out.println((excedente - quantidade) + " produtos foram adicionados, sobraram:" + excedente);
+                System.out.println((quantidade- excedente ) + " produtos foram adicionados, sobraram:" + excedente);
+                estoque.setQuantidade((estoque.getQuantidade() + quantidade) - excedente);
+                estoqueService.save(estoque);
+            } else {
+                estoque.setQuantidade((estoque.getQuantidade() + quantidade));
+                estoqueService.save(estoque);
             }
+            System.out.println("Produto adicionado com sucesso");
         } catch (NoItemsRegisteredException e) {
             System.out.println(e.getMessage());
         }
@@ -102,6 +109,7 @@ public class EstoqueController {
             estoque.setQuantidade(quantidade);
             estoque.setProduto(produto);
             estoqueService.save(estoque);
+            System.out.println("Estoque atualizado com sucesso");
         } catch (NoItemsRegisteredException | EntityExistsException e) {
             System.out.println(e.getMessage());
         }
