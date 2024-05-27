@@ -1,4 +1,4 @@
-package com.compass.application.controllers.estoque;
+package com.compass.application.controllers.abrigo;
 
 import com.compass.application.controllers.abrigo.AbrigoController;
 import lombok.AllArgsConstructor;

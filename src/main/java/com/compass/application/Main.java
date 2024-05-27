@@ -1,8 +1,8 @@
 package com.compass.application;
 
 import com.compass.application.controllers.abrigo.AbrigoController;
+import com.compass.application.controllers.abrigo.AbrigoMenu;
 import com.compass.application.controllers.centrodedistribuicao.CentroMenu;
-import com.compass.application.controllers.estoque.AbrigoMenu;
 import com.compass.application.controllers.produtos.ProdutoController;
 import com.compass.application.controllers.produtos.ProdutoMenu;
 import com.compass.services.AbrigoService;

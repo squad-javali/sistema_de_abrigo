@@ -19,5 +19,4 @@ public class AbrigoFilter {
                 .filter(abrigo -> abrigo.getOccupancy() <= occupancy)
                 .collect(Collectors.toList());
     }*/
-
 }

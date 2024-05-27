@@ -9,9 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "abrigo", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"nome", "endereco", "responsavel", "telefone", "email"})
-})
+@Table(name = "abrigo")
 public class Abrigo {
 
     @Id

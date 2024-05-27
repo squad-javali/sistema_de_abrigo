@@ -60,12 +60,12 @@ public class AbrigoController {
         if (!email.isEmpty()) abrigo.setEmail(email);
 
         System.out.println("Capacidade (" + abrigo.getCapacidade() + "): ");
-        String capacityStr = LeitorDeDados.lerString("Digite uma nova capacidade");
-        if (!capacityStr.isEmpty()) abrigo.setCapacidade(Integer.parseInt(capacityStr));
+        int capacityStr = LeitorDeDados.lerIntInterval("Digite uma nova capacidade",1,200);
+        abrigo.setCapacidade(capacityStr);
 
         System.out.println("Ocupação (%) (" + abrigo.getOcupacao() + "): ");
-        String occupancyStr = LeitorDeDados.lerString("Digite um valor de ocupação");
-        if (!occupancyStr.isEmpty()) abrigo.setOcupacao(Double.parseDouble(occupancyStr));
+        double occupancyStr = LeitorDeDados.lerDouble("Digite um valor de ocupação");
+        abrigo.setOcupacao(occupancyStr);
 
         if (AbrigoValidation.validar(abrigo)) {
             abrigoService.save(abrigo);
